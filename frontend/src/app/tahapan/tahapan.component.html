@@ -1,0 +1,319 @@
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <div class="section-header-back">
+        <button (click)="onGoBack()" class="btn btn-icon"><i class="fas fa-arrow-left"></i></button>
+      </div>
+      <h1>Tahapan {{thisTahapanKegiatan.nama}}</h1>
+      <div class="section-header-breadcrumb">
+        <button class="btn btn-warning" data-toggle="modal" data-target="#editKegiatanTahapanModel"
+          style="margin-right: 10pt;">Ubah</button>
+        <button class="btn btn-danger" (click)="onDeleteTahapan()">Hapus</button>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h2 class="section-title">Mengatur Target Capaian</h2>
+      <p class="section-lead">
+        Atur target perbulan tiap pelaksana untuk tahapan {{thisTahapanKegiatan.nama}}
+      </p>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Target Tahapan Kegiatan</h4>
+            </div>
+            <div class="card-body">
+              <form class="needs-validation" novalidate="" (ngSubmit)="submitAlokasi()">
+                <div class="table-responsive">
+                  <table class="table table-striped" id="table-1" *ngIf="thisTahapanKegiatan.yang_isi == '0'">
+                    <thead>
+                      <tr>
+                        <th class="text-center">
+                          #
+                        </th>
+                        <th>Pelaksana</th>
+                        <th>Satuan</th>
+                        <th *ngFor="let itemBulan of bulan_nama_aktive">{{itemBulan}}</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          1
+                        </td>
+                        <td>
+                          {{thisTahapanKegiatan.seksi.nama}}
+                        </td>
+                        <td>{{thisTahapanKegiatan.satuan}}</td>
+                        <td class="align-middle" *ngIf="see_bulan[0]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_01" name="target_01"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[1]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_02" name="target_02"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[2]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_03" name="target_03"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[3]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_04" name="target_04"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[4]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_05" name="target_05"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[5]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_06" name="target_06"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[6]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_07" name="target_07"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[7]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_08" name="target_08"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[8]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_09" name="target_09"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[9]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_10" name="target_10"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[10]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_11" name="target_11"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[11]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_12" name="target_12"
+                            (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle">
+                          <input type="number" disabled class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.target_all" name="target_all">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="table table-striped" style="table-layout: fixed;" id="table-1"
+                    *ngIf="thisTahapanKegiatan.yang_isi == '1'">
+                    <thead>
+                      <tr>
+                        <th class="text-center" style="width: 30pt;">
+                          #
+                        </th>
+                        <th style="width: 120pt;">Pelaksana</th>
+                        <th style="width: 200pt;">Nama</th>
+                        <th style="width: 200pt;">Tujuan</th>
+                        <th style="width: 100pt;">DL</th>
+                        <th style="width: 100pt;">Satuan</th>
+                        <th *ngFor="let itemBulan of bulan_nama_aktive" style="width: 100pt;">{{itemBulan}}</th>
+                        <th style="width: 100pt;">Total</th>
+                        <th style="width: 100pt;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let itemPair of thisTahapanKegiatan.capaianIndividuPairDL ; let i = index;trackBy:trackByIndex;">
+                        <td>
+                          {{i+1}}
+                        </td>
+                        <td style="width: 100pt;">
+                          <select class="form-control selectric" required
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].status_user"
+                            [ngModelOptions]="{standalone: true}"
+                            [disabled]="thisTahapanKegiatan.capaianIndividuPairDL[i].status_ubah == 0">
+                            <option value="0">Organik</option>
+                            <option value="1">Mitra</option>
+                          </select>
+                        </td>
+                        <td *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].status_user == '0'">
+                          <select class="form-control selectric"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].nip_lama"
+                            [ngModelOptions]="{standalone: true}"
+                            [disabled]="thisTahapanKegiatan.capaianIndividuPairDL[i].status_ubah == 0">
+                            <option [ngValue]="itemUser.nip_lama" *ngFor="let itemUser of users">{{itemUser.nama}}
+                            </option>
+                          </select>
+                        </td>
+                        <td *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].status_user == '1'">
+                          <select class="form-control selectric"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].mitra_id"
+                            [ngModelOptions]="{standalone: true}"
+                            [disabled]="thisTahapanKegiatan.capaianIndividuPairDL[i].status_ubah == 0">
+                            <option [ngValue]="itemMitra.id" *ngFor="let itemMitra of mitras">{{itemMitra.nama}}
+                            </option>
+                            <option value="">Lainnya</option>
+                          </select>
+                          <br>
+                          <input *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].mitra_id == ''" type="text"
+                            class="form-control" [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].mitra_nama"
+                            [ngModelOptions]="{standalone: true}"
+                            [disabled]="thisTahapanKegiatan.capaianIndividuPairDL[i].status_ubah == 0">
+                        </td>
+                        <td class="align-middle">
+                          <input type="text" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.tujuan"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].alokasi_dl.jumlah_dl"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">
+                          {{thisTahapanKegiatan.satuan}}
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[0]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_01"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[1]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_02"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[2]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_03"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[3]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_04"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[4]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_05"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[5]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_06"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[6]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_07"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[7]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_08"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[8]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_09"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[9]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_10"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[10]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_11"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle" *ngIf="see_bulan[11]">
+                          <input type="number" class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_12"
+                            [ngModelOptions]="{standalone: true}" (change)="onChangeSomething()">
+                        </td>
+                        <td class="align-middle">
+                          <input type="number" disabled class="form-control"
+                            [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.target_all"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td><button type="button" class="btn btn-danger" (click)="deletePair(i)">Delete</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-footer text-right">
+                  <button *ngIf="thisTahapanKegiatan.yang_isi == '1'" type="button" style="margin-right: 10pt;"
+                    class="btn btn-warning" (click)="tambahPairCapaianIndividuDL()">Tambah</button>
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="editKegiatanTahapanModel" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate="" (ngSubmit)="onEditTahapan()" #editTahapanForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Ubah Tahapan Kegiatan : </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nama Tahapan</label>
+            <input type="text" class="form-control" required [(ngModel)]="editahapanKegiatan.nama" name="namatahapan">
+            <div class="invalid-feedback">
+              harus terisi
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Satuan</label>
+            <input type="text" class="form-control" required [(ngModel)]="editahapanKegiatan.satuan"
+              name="satuantahapan">
+            <div class="invalid-feedback">
+              harus terisi
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Awal Kegiatan</label>
+            <input type="text" class="form-control" id="startDate" [(ngModel)]="editahapanKegiatan.awal" name="awal">
+          </div>
+          <div class="form-group">
+            <label>Akhir Kegiatan</label>
+            <input type="text" class="form-control" id="endDate" [(ngModel)]="editahapanKegiatan.akhir" name="akhir">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!editTahapanForm.valid">Simpan</button>
+          <button id="closeEditTahapanKegiatan" type="button" class="btn btn-secondary"
+            data-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

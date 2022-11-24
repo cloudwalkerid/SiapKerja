@@ -1,0 +1,84 @@
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>Dashboard {{myData.mySeksi.nama}}</h1>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Capaian Per Bulan</h4>
+            <div class="card-header-action">
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas baseChart height="150" [datasets]="barChartData" [labels]="barChartLabels"
+              [options]="barChartOptions" [legend]="barChartLegend"
+              [chartType]="barChartType"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+              <h4>Capaian Seksi</h4>
+              <div class="card-header-action">
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas baseChart height="150"
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [options]="pieChartOptions"
+              [colors]="pieChartColors"
+              [legend]="pieChartLegend"></canvas>
+            </div>
+          </div>
+      </div>
+    </div>
+    <h2 class="section-title">Kegiatan Per Seksi</h2>
+    <p class="section-lead">
+      Capaian Per Seksi dari Total Kegiatan
+    </p>
+    <div class="row" *ngIf="show">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Kegiatan Seksi {{myData.mySeksi.nama}}</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped" id="table-1">
+                <thead>
+                  <tr>
+                    <th class="text-center">
+                      #
+                    </th>
+                    <th *ngIf="myData.user_is_kepala == true">Seksi Kode</th>
+                    <th>Kegiatan</th>
+                    <th>Capaian</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let itemKegiatan of kegiatanShow ; let i = index">
+                    <td class="align-middle">
+                      {{i+1}}
+                    </td>
+                    <td *ngIf="myData.user_is_kepala == true" class="align-middle">{{itemKegiatan.seksi_id}}</td>
+                    <td class="align-middle">{{itemKegiatan.nama}}</td>
+                    <td class="align-middle">{{itemKegiatan.capaian_total}}</td>
+                    <td class="align-middle" *ngIf="checkIfCanDetail(itemKegiatan)">
+                      <button class="btn btn-info" style="margin-right: 10pt;" (click)="seeDetailKegiatan(itemKegiatan)">Lihat Kegiatan</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

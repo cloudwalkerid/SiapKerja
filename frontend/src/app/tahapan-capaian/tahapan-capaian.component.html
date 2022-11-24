@@ -1,0 +1,244 @@
+<div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <div class="section-header-back">
+          <button (click)="onGoBack()" class="btn btn-icon"><i class="fas fa-arrow-left"></i></button>
+        </div>
+        <h1>Capaian Tahapan {{thisTahapanKegiatan.nama}}</h1>
+      </div>
+  
+      <div class="section-body">
+        <h2 class="section-title">Mengatur Realisasi Capaian</h2>
+        <p class="section-lead">
+          Atur Realisasi perbulan tiap pelaksana untuk tahapan {{thisTahapanKegiatan.nama}}. <br>
+          Adapun Jadwal Tahapan Kegiatan ini adalah {{thisTahapanKegiatan.awal}} sampai {{thisTahapanKegiatan.akhir}}
+        </p>
+        <div class="form-group">
+          <label>Bulan</label>
+          <select class="form-control select2" [(ngModel)]="bulan_index" (change)="clean()">
+            <option value="1">Januari</option>
+            <option value="2">Februari</option>
+            <option value="3">Maret</option>
+            <option value="4">April</option>
+            <option value="5">Mei</option>
+            <option value="6">Juni</option>
+            <option value="7">Juli</option>
+            <option value="8">Agustus</option>
+            <option value="9">September</option>
+            <option value="10">Oktober</option>
+            <option value="11">November</option>
+            <option value="12">Desember</option>
+          </select>
+        </div>
+        <div class="row" *ngIf="show">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Realisasi Tahapan Kegiatan</h4>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped" id="table-1" *ngIf="thisTahapanKegiatan.yang_isi == '0'">
+                      <thead>
+                        <tr>
+                          <th class="text-center">
+                            #
+                          </th>
+                          <th>Pelaksana</th>
+                          <th>Satuan</th>
+                          <th>Target {{bulan_nama[bulan_index-1]}}</th>
+                          <th>Realisasi {{bulan_nama[bulan_index-1]}}</th>
+                          <th>Aksi</th>
+                          <th>Target Total</th>
+                          <th>Realisasi Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            1
+                          </td>
+                          <td>{{thisTahapanKegiatan.seksi.nama}}</td>
+                          <td class="align-middle">
+                            {{thisTahapanKegiatan.satuan}}
+                          </td>
+                          <td class="align-middle">
+                            {{getTergetBulanTahapan()}}
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 0">
+                            {{getRealisasiBulanTahapan()}}
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 1">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_01">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 2">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_02">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 3">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_03">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 4">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_04">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 5">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_05">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 6">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_06">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 7">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_07">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 8">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_08">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 9">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_09">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 10">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_10">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 11">
+                            <input type="number" class="form-control"
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_11"  [ngModelOptions]="{standalone: true}" >
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1 && bulan_index == 12">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaian_tahapan.realisasi_12">
+                          </td>
+                          <td class="align-middle">
+                            <button class="btn btn-warning"
+                              *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 0 && getTergetBulanTahapan() > 0"
+                              (click)="onUbahtahapan()">Ubah</button>
+                            <button *ngIf="thisTahapanKegiatan.capaian_tahapan.isEdit == 1" class="btn btn-primary"
+                              (click)="onSubmitUpdateTahapan()">Simpan</button>
+                          </td>
+                          <td class="align-middle">
+                            {{thisTahapanKegiatan.capaian_tahapan.getTargetAll()}}
+                          </td>
+                          <td class="align-middle">
+                            {{thisTahapanKegiatan.capaian_tahapan.getRealisasiAll()}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table class="table table-striped" id="table-2" *ngIf="thisTahapanKegiatan.yang_isi == '1'">
+                      <thead>
+                        <tr>
+                          <th class="text-center">
+                            #
+                          </th>
+                          <th>Pelaksana</th>
+                          <th>Nama</th>
+                          <th>Satuan</th>
+                          <th>Target {{bulan_nama[bulan_index-1]}}</th>
+                          <th>Realisasi {{bulan_nama[bulan_index-1]}}</th>
+                          <th>Aksi</th>
+                          <th>Target Total</th>
+                          <th>Realisasi Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let itemPair of thisTahapanKegiatan.capaianIndividuPairDL ; let i = index;trackBy:trackByIndex;">
+                          <td>
+                            {{i+1}}
+                          </td>
+                          <td *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].status_user == '0'">Organik</td>
+                          <td *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].status_user == '1'">Mitra</td>
+                          <td *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].status_user == '0'">{{getNamaPelaksana('0', thisTahapanKegiatan.capaianIndividuPairDL[i].nip_lama).nama}}</td>
+                          <td *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].status_user == '1'">{{getNamaPelaksana('1', thisTahapanKegiatan.capaianIndividuPairDL[i].mitra_id).nama}}</td>
+                          <td class="align-middle">
+                            {{thisTahapanKegiatan.satuan}}
+                          </td>
+                          <td class="align-middle">
+                            {{getTergetBulan(thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu)}}
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 0">
+                            {{getRealisasiBulan(thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu)}}
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 1">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_01">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 2">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_02">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 3">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_03">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 4">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_04">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 5">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_05">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 6">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_06">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 7">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_07">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 8">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_08">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 9">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_09">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 10">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_10">
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 11">
+                            <input type="number" class="form-control"
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_11"  [ngModelOptions]="{standalone: true}" >
+                          </td>
+                          <td class="align-middle" *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1 && bulan_index == 12">
+                            <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.realisasi_12">
+                          </td>
+                          <td class="align-middle">
+                            <button class="btn btn-warning"
+                              *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 0 && getTergetBulan(thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu) > 0"
+                              (click)="onUbahIndividu(thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu)">Ubah</button>
+                            <button *ngIf="thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.isEdit == 1" class="btn btn-primary"
+                              (click)="onSubmitUpdateIndividu(thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu)">Simpan</button>
+                          </td>
+                          <td class="align-middle">
+                            {{thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.getTargetAll()}}
+                          </td>
+                          <td class="align-middle">
+                            {{thisTahapanKegiatan.capaianIndividuPairDL[i].capaianIndividu.getRealisasiAll()}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>

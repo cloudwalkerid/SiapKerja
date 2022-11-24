@@ -1,0 +1,19 @@
+CREATE DATABASE siap_kerja_db;
+CREATE USER siap_kerja_user@'%' IDENTIFIED BY 'adsf4tgfsd';
+GRANT ALL ON siap_kerja_db.* TO siap_kerja_user@'%' IDENTIFIED BY 'adsf4tgfsd';
+FLUSH PRIVILEGES;
+
+home
+seksi
+individu
+create_kegiatan
+tahapan
+    beranda_kegiatan
+    edit_kegiatan
+    //tahapan
+    create
+    update
+    delete
+    start/stop
+ckp
+DL

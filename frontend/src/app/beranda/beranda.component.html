@@ -1,0 +1,59 @@
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>Dashboard BPS Kabuapetn Mamasa</h1>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+              <h4>Capaian Satker</h4>
+              <div class="card-header-action">
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas baseChart height="150"
+              [data]="pieChartDataSatker"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [options]="pieChartOptions"
+              [colors]="pieChartColorsSatker"
+              [legend]="pieChartLegend"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h4>Capaian Seksi Bulan {{bulan_nama[bulan_index]}}</h4>
+              <div class="card-header-action">
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas baseChart height="200" [datasets]="barChartData" [labels]="barChartLabels"
+              [options]="barChartOptions" [legend]="barChartLegend"
+              [chartType]="barChartType"></canvas>
+            
+            </div>
+          </div>
+      </div>
+      <div class="col-12 col-sm-12 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Capaian Satker Bulan {{bulan_nama[bulan_index]}}</h4>
+            <div class="card-header-action">
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas baseChart height="150"
+            [data]="pieChartDataBulan"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            [colors]="pieChartColorsBulan"
+            [legend]="pieChartLegend"></canvas>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+</div>

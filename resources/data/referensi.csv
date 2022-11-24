@@ -1,0 +1,18 @@
+kode;Nama;bobot
+PelPet;Pelatihan Petugas;3
+PerPem;Persiapan Pemutakhiran;1
+Pem;Pemutakhiran;3
+PerPen;Persiapan Pencacahan;1
+Pen;Pencacahan;10
+Per;Pemeriksaan Dokumen;5
+Bat;Batching;1
+EdiCod;Editing Coding;5
+Pel;Pelatihan Data Entry;2
+DatEnt;Data Entry;5
+Val;Validasi;10
+Kirdat;Kirim data;2
+Lapor;Penyusunan Laporan;10
+KomAdm;Kompilasi Data Administrasi;5
+Monev;Perencanaan dan Monev;10
+Okan;Operasional Kantor;10
+Wajar;Pemeriksaan Kewajaran Data;3

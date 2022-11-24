@@ -1,0 +1,55 @@
+<div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>Tugas</h1>
+      </div>
+      <div class="section-body">
+        <div class="row" *ngIf="show">
+          <div class="col-12">
+            <div class="card">
+             
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped" id="table-1">
+                    <thead>
+                      <tr>
+                        <th class="text-center">
+                          #
+                        </th>
+                        <th>Kegiatan</th>
+                        <th>Tahapan</th>
+                        <th>Target {{bulan_nama[bulan_index-1]}}</th>
+                        <th>Realisasi {{bulan_nama[bulan_index-1]}}</th>
+                        <th>Target Total</th>
+                        <th>Realisasi Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let itemIndividu of capainIndividuShow ; let i = index">
+                        <td class="align-middle">
+                          {{i+1}}
+                        </td>
+                        <td class="align-middle">{{itemIndividu.kegiatan.nama}}</td>
+                        <td class="align-middle">{{itemIndividu.kegiatan_tahapan.nama}}</td>
+                        <td class="align-middle">{{itemIndividu.getTergetBulan(bulan_index)}}</td>
+                        <td class="align-middle">{{itemIndividu.getRealisasiBulan(bulan_index)}}</td>
+                        <td class="align-middle">{{itemIndividu.getTargetAll()}}</td>
+                        <td class="align-middle">{{itemIndividu.getRealisasiAll()}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </section>
+  </div>
+  
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  
+  

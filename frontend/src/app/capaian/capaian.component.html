@@ -1,0 +1,130 @@
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>Pengisian Capain</h1>
+    </div>
+
+    <div class="section-body">
+      <h2 class="section-title">Isi capaian mu disini.</h2>
+      <p class="section-lead">
+        Isi capaian individu dan capaian kegiatan yang kamu tanggungjawabi.
+      </p>
+
+      <div id="output-status"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Bulan</label>
+            <select class="form-control select2" [(ngModel)]="bulan_index" (change)="clean()">
+              <option value="1">Januari</option>
+              <option value="2">Februari</option>
+              <option value="3">Maret</option>
+              <option value="4">April</option>
+              <option value="5">Mei</option>
+              <option value="6">Juni</option>
+              <option value="7">Juli</option>
+              <option value="8">Agustus</option>
+              <option value="9">September</option>
+              <option value="10">Oktober</option>
+              <option value="11">November</option>
+              <option value="12">Desember</option>
+            </select>
+          </div>
+          <div class="card" id="settings-card">
+            <div class="card-header">
+              <h4>Capaian Individu</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="table-1">
+                  <thead>
+                    <tr>
+                      <th class="text-center">
+                        #
+                      </th>
+                      <th>Rincian</th>
+                      <th>Satuan</th>
+                      <th>Target {{bulan_nama[bulan_index-1]}}</th>
+                      <th>Realisasi {{bulan_nama[bulan_index-1]}}</th>
+                      <th>Action</th>
+                      <th>Target Total</th>
+                      <th>Realisasi Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let itemIndividu of capaianIndividu ; let i = index;">
+                      <td class="align-middle">
+                        {{i+1}}
+                      </td>
+                      <td class="align-middle" [ngModelOptions]="{standalone: true}">
+                        Kegiatan : {{itemIndividu.kegiatan.nama}} <br>
+                        Tahapan : {{itemIndividu.kegiatan_tahapan.nama}} <br>
+                        Tujuan : {{itemIndividu.tujuan}}
+                      </td>
+                      <td class="align-middle" [ngModelOptions]="{standalone: true}">{{itemIndividu.kegiatan_tahapan.satuan}}
+                      </td>
+                      <td class="align-middle" [ngModelOptions]="{standalone: true}">{{getTergetBulan(itemIndividu)}}
+                      </td>
+                      <td class="align-middle" [ngModelOptions]="{standalone: true}" *ngIf="itemIndividu.isEdit == 0">
+                        {{getRealisasiBulan(itemIndividu)}}</td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 1">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_01"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 2">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_02"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 3">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_03"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 4">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_04"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 5">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_05"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 6">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_06"> </td>
+                     <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 7">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_07"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 8">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_08"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 9">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_09"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 10">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_10"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 11">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_11"> </td>
+                      <td class="align-middle" *ngIf="itemIndividu.isEdit == 1 && bulan_index == 12">
+                        <input type="number" class="form-control" [ngModelOptions]="{standalone: true}" 
+                          [(ngModel)]="itemIndividu.realisasi_12"> </td>
+                      <td class="align-middle">
+                        <button class="btn btn-warning"
+                          *ngIf="itemIndividu.isEdit == 0 && getTergetBulan(itemIndividu) > 0"
+                          (click)="onUbah(itemIndividu)">Ubah</button>
+                        <button *ngIf="itemIndividu.isEdit == 1" class="btn btn-primary"
+                          (click)="onSubmitUpdateIndividu(itemIndividu)">Simpan</button></td>
+                      <td class="align-middle" [ngModelOptions]="{standalone: true}">{{itemIndividu.getTargetAll()}}
+                      </td>
+                      <td class="align-middle" [ngModelOptions]="{standalone: true}">{{itemIndividu.getRealisasiAll()}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

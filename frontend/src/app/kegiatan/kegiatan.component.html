@@ -1,0 +1,336 @@
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>Kegiatan {{thisKegiatan.nama}}</h1>
+      <div class="section-header-breadcrumb">
+        <button class="btn btn-success" style="margin-right: 10pt;"><i class="fas fa-download"></i> Unduh Template</button>
+        <button class="btn btn-primary" style="margin-right: 10pt;"><i class="fas fa-upload"></i> Unggah Template</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#editKegiatanModal" style="margin-right: 10pt;">Ubah</button>
+        <button class="btn btn-danger" (click)="deleteKegiatanA()" >Hapus</button>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-danger">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Capaian Kegiatan</h4>
+              </div>
+              <div class="card-body" *ngIf="thisKegiatan.capaian_total == 0">
+                {{thisKegiatan.capaian_total}}
+              </div>
+              <div class="card-body" *ngIf="thisKegiatan.capaian_total != 0">
+                {{thisKegiatan.capaian_total.toFixed(2)}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-primary">
+              <i class="far fa-clone"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Jumlah Sub Kegiatan</h4>
+              </div>
+              <div class="card-body">
+                {{ thisKegiatan.kegiatan_tahapan?.length || '0' }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-warning">
+              <i class="far fa-file"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Reports</h4>
+              </div>
+              <div class="card-body">
+                1,201
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-success">
+              <i class="fas fa-circle"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Online Users</h4>
+              </div>
+              <div class="card-body">
+                47
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <h2 class="section-title">Atur Tahapan Kegiatan dan PJ Kegiatan</h2>
+      <p class="section-lead">
+        Tahapan Kegiatan adalah tahapan-tahapan yang ada di Kegiatan ini. <br>
+        PJ Kegiatan adalah pengguna yang dapat mengatur target dan realisasi capaian kegiatan.
+      </p>
+      
+
+      <div class="row" *ngIf="show">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Tahapan Kegiatan</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="table-1">
+                  <thead>
+                    <tr>
+                      <th class="text-center">
+                        #
+                      </th>
+                      <th>Nama</th>
+                      <th>Satuan</th>
+                      <th>Bobot</th>
+                      <th>Progress</th>
+                      <th>Pelaksana</th>
+                      <th>Rentang</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let itemTahapan of thisKegiatan.kegiatan_tahapan ; let i = index">
+                      <td class="align-middle">
+                        {{i+1}}
+                      </td>
+                      <td class="align-middle">{{itemTahapan.nama}}</td>
+                      <td class="align-middle">{{itemTahapan.satuan}}</td>
+                      <td class="align-middle">{{itemTahapan.bobot_kegiatan_tahapan}}</td>
+                      <td class="align-middle">
+                        <div *ngIf="itemTahapan.capaian_total < 50" class="progress" data-height="4" data-toggle="tooltip" [title]="itemTahapan.capaian_total + '%' ">
+                          <div class="progress-bar bg-danger"  [style]="'width:' + itemTahapan.capaian_total + '%'"></div>
+                        </div>
+                        <div *ngIf="itemTahapan.capaian_total < 100 && itemTahapan.capaian_total >= 50" class="progress" data-height="4" data-toggle="tooltip" [title]="itemTahapan.capaian_total + '%' ">
+                          <div class="progress-bar bg-warning"  [style]="'width:' + itemTahapan.capaian_total + '%'"></div>
+                        </div>
+                        <div *ngIf="itemTahapan.capaian_total >= 100" class="progress" data-height="4" data-toggle="tooltip" [title]="itemTahapan.capaian_total + '%' ">
+                          <div class="progress-bar bg-success"  [style]="'width:' + itemTahapan.capaian_total + '%'"></div>
+                        </div>
+                      </td>
+                      <td class="align-middle" *ngIf="itemTahapan.yang_isi == '0'">
+                        {{thisKegiatan.seksi.nama}}
+                      </td>
+                      <td class="align-middle" *ngIf="itemTahapan.yang_isi == '1'">
+                        <img  *ngFor="let item_individu of (itemTahapan.capaian_individu | notNull)" alt="image" [src]="myData.baseHref + '/img/foto/' + item_individu.user.nip_lama + '.jpg'" class="rounded-circle" width="35" data-toggle="tooltip" [title]="item_individu.user.nama">
+                      </td>
+                      <td class="align-middle">{{itemTahapan.awal}} <br> {{itemTahapan.akhir}}</td>
+                      <td class="align-middle">
+                        <div *ngIf="itemTahapan.is_mulai == 1" class="badge badge-success">Dimulai</div>
+                        <div *ngIf="itemTahapan.is_mulai == 0" class="badge badge-secondary">Belum Dimulai</div>
+                      </td>
+                      <td class="align-middle">
+                        <button *ngIf="itemTahapan.is_mulai == 0" class="btn btn-info" style="margin-right: 10pt;" (click)="seeDetailTahapanKegiatan(itemTahapan)">Detail</button>
+                        <button *ngIf="itemTahapan.is_mulai == 1" class="btn btn-info" style="margin-right: 10pt;" (click)="seeDetailTahapanCapaianKegiatan(itemTahapan)">Capaian</button>
+                        <button *ngIf="itemTahapan.is_mulai == 0" class="btn btn-success" style="margin-right: 10pt;" (click)="startTahapanKegiatan(itemTahapan)">Mulai</button>
+                        <button *ngIf="itemTahapan.is_mulai == 1" class="btn btn-danger" (click)="stopTahapanKegiatan(itemTahapan)">Stop</button>
+                      </td>
+                    </tr>
+        
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer text-right">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addKegiatanTahapan"
+                  (click)="loadDataRefensi()">Tambah Tahapan</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="show">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>PJ Kegiatan</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="table-2">
+                  <thead>
+                    <tr>
+                      <th class="text-center">
+                        #
+                      </th>
+                      <th>Nama</th>
+                      <th>Seksi</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let itemPJ of thisKegiatan.p_j ; let i = index">
+                      <td>
+                        {{i+1}}
+                      </td>
+                      <td>{{itemPJ.user.nama}}</td>
+                      <td>{{itemPJ.user.seksi_nama}}</td>
+                      <td><button class="btn btn-danger" (click)="deletePJ(i, itemPJ)">Delete</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer text-right">
+                <button class="btn btn-primary" (click)="loadDataUser()" data-toggle="modal" data-target="#addPJ">Tambah
+                  PJ</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="addPJ" class="modal" tabindex="-1" role="dialog"  *ngIf="show">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate="" (ngSubmit)="onSubmitnewPJ()" #addPJForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Tambah PJ Kegiatan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <select class="form-control selectric" required="true" [(ngModel)]="newPJ.nip_lama" name="user">
+              <option [ngValue]="itemUser.nip_lama" *ngFor="let itemUser of users">{{itemUser.nama}}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!addPJForm.valid">Tambah</button>
+          <button id="closeAddPJKegiatan" type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="addKegiatanTahapan" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate="" (ngSubmit)="onSubmitnewTahapan(addKegiatanTahapanForm)" #addKegiatanTahapanForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Tambah Tahapan Kegiatan : </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nama Tahapan</label>
+            <input type="text" class="form-control" required [(ngModel)]="newTahapan.nama" name="namatahapan">
+            <div class="invalid-feedback">
+              harus terisi
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Satuan</label>
+            <input type="text" class="form-control" required [(ngModel)]="newTahapan.satuan" name="satuantahapan">
+            <div class="invalid-feedback">
+              harus terisi
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Referensi</label>
+            <select class="form-control selectric" required [(ngModel)]="newTahapan.ref_kode" name="ref_kode">
+              <option [ngValue]="itemref.ref_kode" *ngFor="let itemref of referensi">{{itemref.nama}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Yang mengisi</label>
+            <select class="form-control selectric" required [(ngModel)]="newTahapan.yang_isi" name="yang_isi">
+              <option value="0">Seksi</option>
+              <option value="1">Individu</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Awal Kegiatan</label>
+            <input type="text" class="form-control" id="startDate" [(ngModel)]="newTahapan.awal" name="awal">
+          </div>
+          <div class="form-group">
+            <label>Akhir Kegiatan</label>
+            <input type="text" class="form-control" id="endDate" [(ngModel)]="newTahapan.akhir" name="akhir">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!addKegiatanTahapanForm.valid">Tambah</button>
+          <button id="closeAddKegiatanTahapan" type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="editKegiatanModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate="" (ngSubmit)="editKegiatanA()" #editKegiatanModalForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Kegiatan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label>Nama Kegiatan</label>
+            <input type="text" class="form-control"  required [(ngModel)]="editKegiatan.nama" name="nama">
+            <div class="invalid-feedback">
+              harus terisi
+            </div>
+          </div>
+          <div class="form-group mb-0">
+            <label>Anggaran</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  RP
+                </div>
+              </div>
+              <input type="text" id="editkegiatan_anggaran" class="form-control currency" required [(ngModel)]="editKegiatan.anggaran_text" name="anggaran">
+              <div class="invalid-feedback">
+                harus terisi dan berupa angka
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!editKegiatanModalForm.valid">Simpan</button>
+          <button  id="closeEditKegiatan" type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

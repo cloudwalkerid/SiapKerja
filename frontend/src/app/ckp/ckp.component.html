@@ -1,0 +1,238 @@
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>CKP</h1>
+    </div>
+
+    <div class="section-body">
+      <div class="form-group">
+        <label>Bulan</label>
+        <select class="form-control select2" [(ngModel)]="bulan_aktive" (change)="changeMonth()">
+          <option value="1">Januari</option>
+          <option value="2">Februari</option>
+          <option value="3">Maret</option>
+          <option value="4">April</option>
+          <option value="5">Mei</option>
+          <option value="6">Juni</option>
+          <option value="7">Juli</option>
+          <option value="8">Agustus</option>
+          <option value="9">September</option>
+          <option value="10">Oktober</option>
+          <option value="11">November</option>
+          <option value="12">Desember</option>
+        </select>
+      </div>
+      <div class="row" *ngIf="show">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 *ngIf="statusBulanIni == 0 || statusBulanIni == 1">Capaian Kinerja Pegawai - <span class="badge badge-info">Target</span></h4>
+              <h4 *ngIf="statusBulanIni == 2 || statusBulanIni == 3">Capaian Kinerja Pegawai - <span class="badge badge-info">Realisasi</span></h4>
+            </div>
+            <div class="card-body">
+              <form class="needs-validation" novalidate="" (ngSubmit)="submit()" #ckpForm="ngForm">
+                <div class="table-responsive" *ngIf="statusBulanIni == 1">
+                  <table class="table table-striped" id="table-1">
+                    <thead>
+                      <tr>
+                        <th class="text-center">
+                          #
+                        </th>
+                        <th>Nama</th>
+                        <th>Satuan</th>
+                        <th>Target</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let itemCKP of thisCKP.ckp_item ; let i = index">
+                        <td class="align-middle">
+                          {{i+1}}
+                        </td>
+                        <td class="align-middle">
+                          <input type="text" class="form-control" required [(ngModel)]="thisCKP.ckp_item[i].nama"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">{{thisCKP.ckp_item[i].satuan}}</td>
+                        <td class="align-middle">{{thisCKP.ckp_item[i].target}}</td>
+                        <td class="align-middle"></td>
+                      </tr>
+                      <tr *ngFor="let itemCKP of thisCKP_bulan_lalu.ckp_item_not_full ; let i = index">
+                        <td class="align-middle">
+                          {{i+1 + thisCKP.ckp_item.length}}
+                        </td>
+                        <td class="align-middle">
+                          <input type="text" class="form-control" required
+                            [(ngModel)]="thisCKP_bulan_lalu.ckp_item_not_full[i].nama"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">{{thisCKP_bulan_lalu.ckp_item_not_full[i].satuan}}</td>
+                        <td class="align-middle">
+                          <input type="number" class="form-control" required
+                            [(ngModel)]="thisCKP_bulan_lalu.ckp_item_not_full[i].target"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">
+                          <button type="button" class="btn btn-danger"
+                            (click)="deleteCKPTarget(0, itemCKP.id, 0)">Delete</button>
+                        </td>
+                      </tr>
+                      <tr *ngFor="let itemCKP of newCKPTargetItem ; let i = index">
+                        <td class="align-middle">
+                          {{i+1 + thisCKP.ckp_item.length + thisCKP_bulan_lalu.ckp_item_not_full.length}}
+                        </td>
+                        <td class="align-middle">
+                          <input type="text" class="form-control" required [(ngModel)]="newCKPTargetItem[i].nama"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">
+                          <input type="text" class="form-control" required [(ngModel)]="newCKPTargetItem[i].satuan"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">
+                          <input type="number" class="form-control" required [(ngModel)]="newCKPTargetItem[i].target"
+                            [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">
+                          <button type="button" class="btn btn-danger"
+                            (click)="deleteCKPTarget(1, '', i)">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="table-responsive" *ngIf="statusBulanIni == 2 || statusBulanIni == 3">
+                  <table class="table table-striped" id="table-1">
+                    <thead>
+                      <tr>
+                        <th class="text-center">
+                          #
+                        </th>
+                        <th>Nama</th>
+                        <th>Satuan</th>
+                        <th>Target</th>
+                        <th>Relisasi</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let itemCKP of this.thisCKP.ckp_item ; let i = index">
+                        <td class="align-middle">
+                          {{i+1}}
+                        </td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '0' || this.thisCKP.ckp_item[i].isEdit == '1'">{{this.thisCKP.ckp_item[i].nama}}</td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '2'">
+                          <input type="text" class="form-control" required 
+                            [(ngModel)]="this.thisCKP.ckp_item[i].nama" [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '0' || this.thisCKP.ckp_item[i].isEdit == '1'">{{this.thisCKP.ckp_item[i].satuan}}</td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '2'">
+                          <input type="text" class="form-control" required 
+                            [(ngModel)]="this.thisCKP.ckp_item[i].satuan" [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '0' || this.thisCKP.ckp_item[i].isEdit == '1'">{{this.thisCKP.ckp_item[i].target}}</td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '2'">
+                          <input type="number" class="form-control" required 
+                            [(ngModel)]="this.thisCKP.ckp_item[i].target" [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '0'">{{this.thisCKP.ckp_item[i].realisasi}}</td>
+                        <td class="align-middle" *ngIf="this.thisCKP.ckp_item[i].isEdit == '1' || this.thisCKP.ckp_item[i].isEdit == '2'">
+                          <input type="number" class="form-control" required 
+                            [(ngModel)]="this.thisCKP.ckp_item[i].realisasi" [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td class="align-middle">
+                          <button class="btn btn-warning" *ngIf="this.thisCKP.ckp_item[i].isEdit == '0'" type="button" 
+                          (click)="ubah(this.thisCKP.ckp_item[i])" style="margin-right: 10pt;">Ubah</button>
+                          <button class="btn btn-primary" *ngIf="this.thisCKP.ckp_item[i].isEdit == '1' || this.thisCKP.ckp_item[i].isEdit == '2'" type="button" 
+                          (click)="simpanUbah(this.thisCKP.ckp_item[i])" style="margin-right: 10pt;">Simpan</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-footer text-right">
+                  <button class="btn btn-success" *ngIf="statusBulanIni == 2 || statusBulanIni == 3" type="button"
+                    (click)="downloadCKPTarget()" style="margin-right: 10pt;">Download CKP-T</button>
+                  <button class="btn btn-success" *ngIf="statusBulanIni == 3" type="button" (click)="downloadCKPRealisasi()"
+                    style="margin-right: 10pt;">Download CKP-R</button>
+                  <button class="btn btn-primary" *ngIf="statusBulanIni == 0" type="button" (click)="createCKPTarget()"
+                    style="margin-right: 10pt;">Buat CKP-T</button>
+                  <button class="btn btn-primary" *ngIf="statusBulanIni == 1" type="button" (click)="tambahCKPTarget()"
+                    style="margin-right: 10pt;">Tambah Item CKP-T</button>
+                    <button class="btn btn-primary" *ngIf="statusBulanIni == 2" type="button" (click)="tambahCKPRealisasi()"
+                    style="margin-right: 10pt;">Tambah Item CKP-R</button>
+                  <button class="btn btn-primary" *ngIf="statusBulanIni == 1" type="button" (click)="loadDownload(1)"
+                    style="margin-right: 10pt;" [disabled]="!ckpForm.valid" 
+                    data-toggle="modal" data-target="#pilihUserCKPT">Kirim CKP-T</button>
+                  <button class="btn btn-primary" *ngIf="statusBulanIni == 2" type="button" (click)="loadDownload(2)"
+                    style="margin-right: 10pt;" [disabled]="!ckpForm.valid" 
+                    data-toggle="modal" data-target="#pilihUserCKPR">Kirim CKP-R</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div id="pilihUserCKPT" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate="" #pilihUserCKPTForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Yang Tanda Tangan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <select class="form-control selectric" [(ngModel)]="nip_lama" name="seksi">
+              <option [ngValue]="itemUser.nip_lama" *ngFor="let itemUser of users">{{itemUser.nama}}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="!pilihUserCKPTForm.valid">Kirim</button>
+          <button id="closePilihUserCKPT" type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="pilihUserCKPR" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="needs-validation" novalidate="" #pilihUserCKPRForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Yang Tanda Tangan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <select class="form-control selectric" [(ngModel)]="nip_lama" name="seksi">
+              <option [ngValue]="itemUser.nip_lama" *ngFor="let itemUser of users">{{itemUser.nama}}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="submit()" [disabled]="!pilihUserCKPRForm.valid">Kirim</button>
+          <button id="closePilihUserCKPR" type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
